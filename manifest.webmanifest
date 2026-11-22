@@ -1,8 +1,8 @@
 {
   "id": "./index.html",
-  "name": "Site Ledger — Local",
+  "name": "Site Ledger — Cloud Sync",
   "short_name": "Site Ledger",
-  "description": "Offline-first site cashbook and labour record stored on this device",
+  "description": "Private site cashbook and work records with Google-account sync",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

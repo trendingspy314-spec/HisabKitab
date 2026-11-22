@@ -2,9 +2,9 @@
 // Replace values from Firebase Console > Project settings > Your apps.
 // Never put a service-account private key or admin SDK credential in this file.
 window.SITE_LEDGER_FIREBASE_CONFIG = {
-  ownerEmail: "PASTE_YOUR_GOOGLE_EMAIL",
-  apiKey: "PASTE_FIREBASE_WEB_API_KEY",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  appId: "PASTE_FIREBASE_APP_ID"
+  ownerEmail: "trendingspy314@gmail.com",
+  apiKey: "AIzaSyBw0dOmYKsviJV3YpD88_EKpzL6nfxfY9I",
+  authDomain: "hisabkitab-4a218.firebaseapp.com",
+  projectId: "hisabkitab-4a218",
+  appId: "1:1056820092346:web:7cd1fcf0355a8ab08d1183"
 };

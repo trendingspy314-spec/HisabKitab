@@ -1,45 +1,44 @@
-# Site Ledger — Firebase sync version (Hinglish guide)
+# HisabKitab / Site Ledger — complete Firebase bundle (Hinglish)
 
-## Seedhi baat
+## Pehle yeh samjhein
 
-- **GitHub Pages** app ki website dikhata hai; ledger data GitHub mein nahi rakhta.
-- **Firebase** signed-in account ke private Firestore area mein ledger sync karta hai.
-- Har phone par **same Google account** use karna hai.
-- Internet na ho toh entry isi phone par save ho sakti hai; cloud sync internet wapas aane par hoga. Header mein **Synced** status dekhne ke baad hi cloud-save pakka samjhein.
-- JSON backup/restore aur har section ke CSV export ab bhi hain. JSON ko Drive mein manually upload karte rahein.
+GitHub Pages app ki screen/code serve karta hai. Firebase Google sign-in aur cloud ledger store karta hai. **GitHub par `firestore.rules` file upload karne se Firebase rules apne-aap publish nahi hote**—Firebase Console mein Rules tab se alag se Publish karne honge.
 
-## Aapke existing GitHub repo mein upload
+## Existing repo mein complete files upload
 
-Aapka repo: `trendingspy314-spec/HisabKitab`.
+Repo: `trendingspy314-spec/HisabKitab`.
 
-1. Pehle is app se **Backup → Download full JSON backup** karke file ko phone/Drive mein rakh lein.
-2. GitHub repo kholkar **Add file → Upload files** karein.
-3. Is folder ke ye files repo ke root (main screen par jo `index.html` hai usi jagah) upload/replace karein: `index.html`, `sw.js`, `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`, `firebase-config.js`, `firestore.rules`, `README_HINGLISH.md`.
-4. Commit changes karein. GitHub Pages ka address wahi rahega: `https://trendingspy314-spec.github.io/HisabKitab/`.
+1. App khul raha ho toh Backup tab se JSON backup download karke safe jagah rakhein. **Clear site data mat karein**—us se phone ki local entries mit sakti hain.
+2. Is ZIP ko extract karein. Andar ki files ko GitHub repo ke root mein upload karke same-name files replace karein: `index.html`, `sw.js`, `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`, `firebase-config.js`, `firestore.rules`, `README_HINGLISH.md`.
+3. GitHub par commit karein.
+4. Cache ko bypass karke updated app kholne ke liye pehli baar yeh URL use karein: `https://trendingspy314-spec.github.io/HisabKitab/?refresh=4`. Yeh local IndexedDB data delete nahi karta.
 
-## Firebase ek baar set up karein
+## Firebase Console mein ek baar zaroor check/publish karein
 
-1. `https://console.firebase.google.com/` par **apne hi Google account** se sign in karke project banayein.
-2. Project mein **Add app → Web (</>)** chunein. App nickname kuch bhi rakh sakte hain. Firebase web config dikhayega.
-3. Is repo ki `firebase-config.js` file GitHub par edit karein. Firebase se mile `apiKey`, `authDomain`, `projectId`, `appId` values ko file ke `PASTE_...` values se replace karein. `ownerEmail` ko apne Google account ke email se replace karein. `storageBucket` ya service-account key yahan mat daalein.
-4. Firebase Console → **Authentication → Get started → Sign-in method → Google → Enable → Save**.
-5. Authentication ke **Settings / Authorized domains** mein `trendingspy314-spec.github.io` add karein. Sirf hostname dalein—`https://`, `/HisabKitab/` ya slash nahi.
-6. Firebase Console → **Firestore Database → Create database**. Production mode/locked rules chunein; region ko soch samajhkar chunein, kyunki baad mein badalna mushkil hota hai.
-7. Firestore → **Rules** tab mein `firestore.rules` file ka poora text paste karein. `PASTE_YOUR_GOOGLE_EMAIL` ko config mein diye gaye usi email (lowercase) se replace karke **Publish** karein. Rule ko `true` karke public mat karein.
-8. Config file save/commit karne ke baad Pages update hone ke liye thoda intezar karke app kholein, **Sign in** dabayein, aur wahi Google account chunein. Pehli baar purane phone ke local records is account ke cloud ledger ke saath jod diye jayenge; existing rows ko ID ke hisaab se merge kiya jata hai.
+1. Firebase Console → **Authentication → Sign-in method → Google** → Enable → Save.
+2. Authentication → **Settings → Authorized domains** mein `trendingspy314-spec.github.io` hona chahiye (hostname only; `/HisabKitab/` nahi).
+3. **Firestore Database → Rules** mein is package ke `firestore.rules` ka poora text paste karke **Publish** karein. Current rule sirf configured owner Google account ko access deta hai; ise `true` karke public na karein.
+4. Repo ke `firebase-config.js` mein current Firebase Web App config rakhein. Is package mein GitHub par abhi maujood config hai. Agar Firebase project/app badla hai toh Console → Project settings → Your apps se naye `apiKey`, `authDomain`, `projectId`, `appId` daalna zaroori hai. Service-account/private key kabhi nahi daalni.
 
-## Roz ka use aur check
+## Test kaise karein
 
-- Entry save karne ke baad header mein **Synced** status aaye tabhi cloud copy confirm hai.
-- Internet na ho toh phone par local copy rahegi; connection lautne par app kholkar **Sync now** dabayein. Local-only save ko doosre device par turant nahi dekha ja sakta.
-- Naye phone par same GitHub Pages link + same Google account use karein.
-- Backup tab se JSON download karke private Google Drive folder mein khud upload karte rahein. Restore selected phone ke records ko replace karta hai; restore ke baad sync local aur cloud rows ko merge karta hai, cloud rows delete nahi karta.
-- CSV export har section se alag hota hai; complete restore ke liye JSON rakhein.
+1. App mein Google icon ke saath **Google se sign in** dabayein aur config mein diye gaye wahi Google account se sign in karein.
+2. App par lautne ke baad header mein **Synced** dikhna chahiye. Backup tab mein **Cloud & local safety** ke neeche login/sync ki detail bhi dikhegi.
+3. Ek chhoti test entry save karein; “Saved on this device and cloud” message/“Synced” status dekhein. Doosre device par wahi Google account kholkar verify karein.
+4. JSON backup manual hi rahega—Backup tab se download karke apne Drive mein upload karein. CSV exports bhi har section mein hain.
 
-## Security aur limits
+## Agar login ya sync fail ho
 
-- Browser Firebase config website code mein hota hai, isliye woh secret/password nahi hai. Data ki hifazat sign-in aur Firestore rules karte hain. **Password, private key, PIN, Aadhaar/PAN** kisi file/entry mein mat daalein.
-- Rules sirf configured Google email ke authenticated account ko uske apne UID ke neeche data access karne dete hain. Config email aur Rules wala email ekdum same rakhein.
-- Is ready version mein current ledger ek Firestore document mein sync hota hai. Firestore document ki size limit 1 MiB hai; bahut bade/lambe ledger par sync error aaye toh backup rakhein aur app ko paginated record storage mein badalna padega.
-- Firebase quotas/pricing badal sakti hain; Firebase Console mein project ka usage/billing dekhein. Free quota ko unlimited na samjhein.
-- Yeh files Firebase project create nahi karti aur sign-in test nahi karti. Setup complete hone tak header **Setup needed / Local only** dikha sakta hai.
+Backup tab → **Cloud & local safety** mein exact error text/code dekhein:
+
+- `auth/unauthorized-domain` → Firebase Authentication ke Authorized domains mein `trendingspy314-spec.github.io` add karke Save karein.
+- `auth/operation-not-allowed` → Google provider enable nahi hua; Authentication mein enable karein.
+- `permission-denied` → Firebase Console ke Firestore → Rules mein package ka rules text paste karke **Publish** karein. Sirf GitHub par rules file hona kaafi nahi.
+- `Wrong Google account` → config mein owner ke roop mein set account se sign in karein.
+- `Setup needed` / Firebase SDK error → internet on rakhein aur page reload karein; config fields check karein.
+
+Error code ke saath screenshot bhejne se exact agla fix pata chalega. Password, private key ya OTP kisi ko mat bhejein.
+
+## Data safety / limit
+
+Offline entry pehle is phone par save hoti hai; internet/sign-in ke baad app cloud sync karta hai. Doosre phone par tabhi milegi jab sync successful ho. JSON backup phir bhi alag safety copy hai. Is version mein poora ledger ek Firestore document ke andar hai; Firestore document ki 1 MiB limit hoti hai, isliye bahut bade ledger par alag paginated-storage design chahiye.
